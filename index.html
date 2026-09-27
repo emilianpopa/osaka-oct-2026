@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Osaka, October 2026</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#fff; --ink:#15181d; --muted:#5a6270; --line:#e2e6ec;
+    --blue:#2563eb; --orange:#f97316; --purple:#7c3aed; --cyan:#0891b2; --amber:#d97706;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#12151a; --card:#1b1f26; --ink:#eef1f5; --muted:#9aa4b2; --line:#2b313b;
+    }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:980px;margin:0 auto;padding:24px 16px 64px}
+  h1{font-size:1.6rem;margin:0 0 4px}
+  .sub{color:var(--muted);margin:0 0 20px}
+  #map{height:420px;border-radius:12px;border:1px solid var(--line);margin-bottom:8px}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem;color:var(--muted);margin:0 0 24px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:16px 18px;margin-bottom:14px}
+  .card h2{font-size:1.05rem;margin:0 0 2px;display:flex;align-items:center;gap:8px}
+  .tag{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;
+       padding:2px 7px;border-radius:5px;color:#fff}
+  .dist{color:var(--muted);font-size:.9rem;margin:2px 0 10px}
+  .card p{margin:6px 0}
+  .kv{margin:8px 0 0;font-size:.94rem}
+  .kv div{display:flex;gap:8px;padding:3px 0;border-top:1px solid var(--line)}
+  .kv b{min-width:104px;color:var(--muted);font-weight:600;flex:none}
+  a{color:var(--blue)}
+  .note{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--amber);
+        border-radius:10px;padding:14px 18px;margin:24px 0}
+  .note h3{margin:0 0 8px;font-size:1rem}
+  .note ul{margin:0;padding-left:20px}
+  .note li{margin:5px 0}
+  .todo{border-left-color:var(--purple)}
+  footer{color:var(--muted);font-size:.82rem;margin-top:32px;border-top:1px solid var(--line);padding-top:14px}
+  @media (max-width:560px){ #map{height:320px} .kv b{min-width:84px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Osaka, October 2026</h1>
+  <p class="sub">Next Generation Longevity, 15 to 16 October &middot; Nakanoshima Qross</p>
+
+  <div id="map"></div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--blue)"></i> Conference</span>
+    <span><i class="dot" style="background:var(--orange)"></i> Gym</span>
+    <span><i class="dot" style="background:var(--purple)"></i> Sauna and onsen</span>
+    <span><i class="dot" style="background:var(--cyan)"></i> Station</span>
+    <span><i class="dot" style="background:var(--amber)"></i> Other</span>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag" style="background:var(--blue)">Conference</span> Nakanoshima Qross</h2>
+    <p class="dist">Next Generation Longevity 2026, 15 to 16 October</p>
+    <div class="kv">
+      <div><b>Address</b><span>4-3-51 Nakanoshima, Kita-ku, Osaka 530-0005</span></div>
+      <div><b>Japanese</b><span>&#20013;&#20043;&#23798;&#12463;&#12525;&#12473; &#12306;530-0005 &#22823;&#38442;&#24066;&#21271;&#21306;&#20013;&#20043;&#23798;4-3-51</span></div>
+      <div><b>Nearest stn</b><span>Watanabebashi, Keihan Nakanoshima line, 5 min walk</span></div>
+      <div><b>Map</b><span><a href="https://www.google.com/maps/search/?api=1&query=34.6920276,135.4904690">Open in Google Maps</a></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag" style="background:var(--orange)">Gym</span> Gold&rsquo;s Gym Osaka Nakanoshima</h2>
+    <p class="dist"><b>310 m from the venue, about a 4 minute walk.</b> This is the one to use on conference days.</p>
+    <div class="kv">
+      <div><b>Address</b><span>Dojima Crosswalk 3F, Fukushima 1-1-51, Fukushima-ku, Osaka 553-0003</span></div>
+      <div><b>Hours</b><span>Mon to Sat 07:00 to 23:30, Sun 09:00 to 22:00</span></div>
+      <div><b>Day pass</b><span>&yen;2,860</span></div>
+      <div><b>Has</b><span>Free weights, pool, sauna</span></div>
+      <div><b>Map</b><span><a href="https://www.google.com/maps/search/?api=1&query=Gold%27s%20Gym%20Osaka%20Nakanoshima">Open in Google Maps</a></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag" style="background:var(--orange)">Gym</span> Gold&rsquo;s Gym Umeda Osaka</h2>
+    <p class="dist">1.8 km from the venue, about 23 minutes on foot or two stops on the subway. <b>Open 24 hours</b>, so this is the one for a 6:40 session.</p>
+    <div class="kv">
+      <div><b>Address</b><span>Chayamachi 15-31, Kita-ku, Osaka 530-0013</span></div>
+      <div><b>Phone</b><span>06 6292 0212 &nbsp;(+81 6 6292 0212)</span></div>
+      <div><b>Hours</b><span>24 hours, <b>closed the 3rd Monday of the month, which is Mon 19 October</b></span></div>
+      <div><b>Day pass</b><span>&yen;2,800</span></div>
+      <div><b>Has</b><span>Extensive free weights, sauna</span></div>
+      <div><b>Map</b><span><a href="https://www.google.com/maps/search/?api=1&query=Gold%27s%20Gym%20Umeda%20Osaka">Open in Google Maps</a></span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="tag" style="background:var(--purple)">Sauna</span> Spa World</h2>
+    <p class="dist">Shinsekai, near Tennoji. Gym plus themed hot springs, the easy recovery day.</p>
+    <div class="kv">
+      <div><b>Address</b><span>3-4-24 Ebisu-higashi, Naniwa-ku, Osaka 556-0002</span></div>
+      <div><b>Price</b><span>around &yen;1,500</span></div>
+      <div><b>Map</b><span><a href="https://www.google.com/maps/search/?api=1&query=34.6499063,135.5056052">Open in Google Maps</a></span></div>
+    </div>
+    <p>Ordinary neighbourhood sento with a &#27700;&#39080;&#21570; cold bath run &yen;500 to &yen;1,500 and are everywhere. Cheaper and better contrast bathing than anything on ClassPass in London.</p>
+  </div>
+
+  <div class="card" id="stay">
+    <h2><span class="tag" style="background:var(--amber)">To add</span> Where you are sleeping</h2>
+    <p class="dist">Not yet on this map.</p>
+    <p>Send me the address and I will add the pin plus walking times to the venue and both gyms. I could not find a Japan HomeExchange confirmation in your email, and the HomeExchange session on this machine is signed out, so I have nothing to work from.</p>
+  </div>
+
+  <div class="note">
+    <h3>Gym practicalities in Japan</h3>
+    <ul>
+      <li><b>No booking needed.</b> Walk in, show your passport for the ID check, pay.</li>
+      <li><b>Ask for the Traveler&rsquo;s Passport on your first visit: &yen;11,000 for 10 days, valid at any Gold&rsquo;s Gym in Japan.</b> Against &yen;2,800 a day that is &yen;11,000 instead of &yen;22,400 over eight days, and it covers Kyoto too. Not every branch sells it, so ask at the first one.</li>
+      <li>Ask for a free Visitor Card so you skip the paperwork on later visits.</li>
+      <li><b>Bring a second clean pair of indoor trainers.</b> Mandatory, and the thing that catches visitors out.</li>
+      <li>ClassPass has <b>zero</b> inventory in Osaka. Both classpass.com and classpass.co.jp return no results. Do not rely on it here.</li>
+    </ul>
+  </div>
+
+  <div class="note todo">
+    <h3>Still open</h3>
+    <ul>
+      <li><b>The flight is not booked.</b> Your saved search is Copenhagen to Osaka, 11 to 18 October.</li>
+      <li>Accommodation address, so it can go on this map.</li>
+      <li>The NGL executive dinner in Kyoto, date not confirmed. The Traveler&rsquo;s Passport covers Gold&rsquo;s Gym Kyoto if you stay over.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Distances are straight line from Nakanoshima Qross, so walking routes will be slightly longer.
+    Gym hours and prices from Gold&rsquo;s Gym Japan listings, September 2026. Check before travelling.
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+  var P = [
+    ["Nakanoshima Qross (conference)", 34.6920276, 135.4904690, "#2563eb"],
+    ["Gold's Gym Osaka Nakanoshima, 4 min walk", 34.6946598, 135.4893665, "#f97316"],
+    ["Gold's Gym Umeda, 24 hours", 34.7067973, 135.4995594, "#f97316"],
+    ["Spa World, sauna and onsen", 34.6499063, 135.5056052, "#7c3aed"],
+    ["Watanabebashi stn, nearest to venue", 34.6938049, 135.4944384, "#0891b2"],
+    ["Osaka Station", 34.7019048, 135.4944259, "#0891b2"],
+    ["Nakanoshima Park", 34.6923995, 135.5077568, "#d97706"],
+    ["Dotonbori", 34.6690306, 135.5015715, "#d97706"]
+  ];
+  var map = L.map('map');
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  var pts = [];
+  P.forEach(function(p){
+    L.circleMarker([p[1], p[2]], {
+      radius: 9, color: '#fff', weight: 2, fillColor: p[3], fillOpacity: 1
+    }).addTo(map).bindPopup('<b>' + p[0] + '</b>');
+    pts.push([p[1], p[2]]);
+  });
+  map.fitBounds(pts, { padding: [40, 40] });
+</script>
+</body>
+</html>
